@@ -27,15 +27,6 @@ production:
   adapter: postgresql
   url: <%= ENV['DATABASE_URL'] %>
 
-
-cable: 
-  <<: *default
-  adapter: postgresql 
-  database: myapp_cable_production 
-  url: <%= ENV['DATABASE_URL'] %>
-
-queue: 
-  <<: *default
-  adapter: postgresql 
-  database: myapp_cable_production 
-  url: <%= ENV['DATABASE_URL'] %>
+  cache:
+    adapter: redis
+    url: redis://localhost:6379/0
