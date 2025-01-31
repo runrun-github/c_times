@@ -22,3 +22,7 @@ production:
   url: <%= ENV['DATABASE_URL'] %>
   pool: 5
   sslmode: require
+
+  cable: 
+    <<: *default
+    url: <%= ENV['DATABASE_URL'] %>
