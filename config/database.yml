@@ -6,23 +6,23 @@ default: &default
 development:
   <<: *default
   database: your_app_development
-  username: your_username
-  password: your_password
+  username: <%= ENV['DB_USERNAME'] %>  # 環境変数でユーザー名を指定
+  password: <%= ENV['DB_PASSWORD'] %>  # 環境変数でパスワードを指定
   host: localhost
 
 test:
   <<: *default
   database: your_app_test
-  username: your_username
-  password: your_password
+  username: <%= ENV['DB_USERNAME'] %>  # 環境変数でユーザー名を指定
+  password: <%= ENV['DB_PASSWORD'] %>  # 環境変数でパスワードを指定
   host: localhost
 
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  url: <%= ENV['DATABASE_URL'] %>  # Herokuなどの環境で使われるURL形式
   pool: 5
-  sslmode: require
+  sslmode: require  # SSL接続が必要な場合
 
-  cable: 
+  cable:
     <<: *default
-    url: <%= ENV['DATABASE_URL'] %>
+    url: <%= ENV['DATABASE_URL'] %>  # Action Cable でも同じ設定を使用

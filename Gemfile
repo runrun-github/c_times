@@ -4,8 +4,9 @@ source "https://rubygems.org"
 gem "rails", "~> 8.0.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
-# Use sqlite3 as the database for Active Record
-# gem "sqlite3", ">= 2.1"
+# Use PostgreSQL as the database for Active Record (replace sqlite3 with pg)
+# gem "sqlite3", ">= 2.1"  # この行はコメントアウト
+gem "pg", ">= 1.1"  # PostgreSQL用のgemを追加
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
@@ -41,8 +42,9 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "sqlite3", ">= 2.1"
+  # コメントアウトされたsqlite3の行を削除
+  # gem "sqlite3", ">= 2.1"
+  gem "pg", ">= 1.1"  # PostgreSQL用のgemを追加
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
@@ -64,5 +66,5 @@ group :test do
 end
 
 group :production do
-  gem "pg"
+  # gem "pg" はすでに追加されています
 end
