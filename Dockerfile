@@ -38,3 +38,5 @@ USER rails
 # Entrypoint の設定
 COPY docker-entrypoint.sh /usr/bin/
 ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
+
+RUN apk add --no-cache libxml2 libxslt
