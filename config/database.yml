@@ -33,3 +33,9 @@ cable:
   adapter: postgresql 
   database: myapp_cable_production 
   url: <%= ENV['DATABASE_URL'] %>
+
+queue: 
+  <<: *default
+  adapter: postgresql 
+  database: myapp_cable_production 
+  url: <%= ENV['DATABASE_URL'] %>
