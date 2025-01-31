@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # README
 
 This README would normally document whatever steps are necessary to get the
@@ -26,3 +27,6 @@ Things you may want to cover:
 =======
 # CTimes-TMP-
 >>>>>>> 5052a2dcecfaa684f7e5f94174305418229825b9
+=======
+# c_times
+>>>>>>> 8d9ef2927fd6dabe1dff20ea06fc93f42ed91b84
