@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM ruby:3.1.2-alpine3.15 AS build
+FROM ruby:3.2.0-alpine AS build  # Ruby のバージョンを 3.2.0 に変更
 
 WORKDIR /rails
 
@@ -17,7 +17,7 @@ RUN bundle exec bootsnap precompile app/ lib/
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # Stage 2: Production stage
-FROM ruby:3.1.2-alpine3.15 AS production
+FROM ruby:3.2.0-alpine AS production  # Ruby のバージョンを 3.2.0 に変更
 
 WORKDIR /rails
 
