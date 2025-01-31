@@ -1,32 +1,7 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-# README
+# Notice
+This app was created as part of a class assignment called “AI Data Science Tools 2” at Chuo University.
+Please note that the functionality is insufficient and there are many issues that need to be addressed before it can be put to practical use.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-=======
-# CTimes-TMP-
->>>>>>> 5052a2dcecfaa684f7e5f94174305418229825b9
-=======
-# c_times
->>>>>>> 8d9ef2927fd6dabe1dff20ea06fc93f42ed91b84
+# About
+This application is useful for students of Chuo University to arrange each other's schedules.
+This app was developed using Ruby on Rails.
