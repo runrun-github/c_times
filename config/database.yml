@@ -26,3 +26,10 @@ test:
 production:
   adapter: postgresql
   url: <%= ENV['DATABASE_URL'] %>
+
+
+cable: 
+  <<: *default
+  adapter: postgresql 
+  database: myapp_cable_production 
+  url: <%= ENV['DATABASE_URL'] %>
