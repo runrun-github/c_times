@@ -1,0 +1,116 @@
+<br>
+<h1>イベントの詳細</h1>
+<br>
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% elsif flash[:notice] %>
+  <div class="alert alert-success">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+<h2> <%= @event.name %> </h2>
+<p> <%= @event.description %> </p>
+<%= link_to "都合を入力する", new_event_user_path(@event) , class: "btn btn-primary" %>
+<%= link_to "イベント情報の編集", edit_event_path(@event), class: "btn btn-primary" %>
+
+
+<br>
+
+<br>
+
+<table class="table time_table">
+  <thead>
+    <tr>
+      <th>時間帯</th>
+      <% ["日", "月", "火", "水", "木", "金", "土"].each do |day| %>
+        <th><%= day%></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% ["1", "2", "lunch", "3", "4", "5", "6", "night"].each do |slot| %>
+      <tr>
+        <td><%= @time_slots_in_japanese[slot] %></td>
+        <% ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"].each do |day| %>
+          <td><%= @counts["#{day}_#{slot}_count"] %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<% if @users %>
+  <h4>入力した人:</h4>
+  <table class="table">
+    <tr>
+        <th>
+            氏名
+        </th>
+    </tr>
+    <% @users.each do |user| %>
+        <tr>
+            <td>
+                <%= user.user_name %>
+            </td>
+        </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p>参加者はまだいません。</p>
+<% end %>
+<br>
+
+<%= link_to "ホームに戻る", events_path, class: "btn btn-primary" %>
+
+
+<div style ="display:inline" >
+    <input id="b0" type="checkbox" class="ocbutton"><label for="b0" class = "btn btn-primary"></label>
+    <div id="b0_content"  class="oc_content">
+
+        <%= form_with url: event_path(@event), method: :delete do |form| %>
+        <div class = "dalete_div">
+            <%= form.label :delete_key, "削除キーを入力してください：" %>
+            <%= form.password_field :delete_key, required: true , class:"dalete_input_text" %>
+
+            <%= form.submit "削除する", class: "btn btn-primary", data: { confirm: "本当に削除しますか？" } %>
+        </div>
+        <% end %>
+
+    </div>
+</div>
+<br>
+<br>
+<br>
+<style type="text/css">
+.ocbutton{
+            display: none;
+            cursor: pointer;
+}
+.ocbutton + label{
+            cursor: pointer;
+}
+.ocbutton + label:before{ 
+            content:"イベントを削除"
+}
+.ocbutton:checked + label:before{ 
+            content:"削除のキャンセル"
+}
+.oc_content{
+            display: none;
+}
+#b0:checked ~ #b0_content{
+            display:block;
+            
+}
+.oc_content{ 
+    margin: 10px 0;
+    padding: 1em;
+    background-color: #ffcece;
+    border-radius: 5px;
+    
+}
+
+</style>

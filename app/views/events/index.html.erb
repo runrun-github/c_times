@@ -1,0 +1,25 @@
+
+<div class = "top_page_main">
+    秒で決まる、みんなの予定<br>
+    <%= link_to "新しいイベントを作成", new_event_path , class: "btn btn-primary" %>
+</div>
+<br>
+<h1>イベント一覧</h1>
+<p style = "text-align:center">日程調整が進行中のイベント一覧です</p>
+<br>
+<br>
+<table class = "table">
+    <tr>
+        <th>イベント名</th>
+        <th>イベントの概要</th>
+    </tr>
+<% @events.each {|event| %>
+    <tr>
+        <td><%= link_to event.name, event %></td>
+        <td><%= event.description %></td>
+    </tr>
+<% } %>
+</table>
+<br>
+<br>
+

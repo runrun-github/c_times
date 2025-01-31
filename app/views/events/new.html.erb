@@ -1,0 +1,23 @@
+<br>
+<h1>新しいイベントを作成</h1>
+<br>
+
+<%= form_with model: @event do |form| %>
+  <table class="table create_table">
+    <tr>
+      <th><%= form.label :name, "イベント名" %></th>
+      <td><%= form.text_field :name , required: true%></td>
+    </tr>
+    <tr>
+      <th><%= form.label :description, "イベントの説明" %></th>
+      <td><%= form.text_area :description, rows: 4, cols: 40 %></td>
+    </tr>
+    <tr>
+        <th>
+        </th>
+      <td>
+        <%= form.submit "イベントを作成" , class:"btn btn-primary" %>
+      </td>
+    </tr>
+  </table>
+<% end %>

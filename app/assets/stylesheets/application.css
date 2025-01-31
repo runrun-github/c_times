@@ -1,0 +1,122 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+
+.custom_header{
+background-color: rgb(199, 15, 15);
+padding: 10px;
+text-align: center;
+}
+
+.top_page_main{
+    width: 100vw;
+    margin: 0 0 0 calc((100% - 100vw) / 2);
+    height: 300px;
+    background-image: url("calendar.png");
+    background-size: cover;
+    text-align: center;
+    color: rgb(199, 15, 15);
+    font-size: 3rem;
+    font-weight: bold;
+    padding: 60px 0;
+}
+.top_page_main a{
+    margin: 50px auto!important;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px 25px;
+}
+
+h1{
+    font-weight: bold!important;
+    text-align:center;
+}
+
+.custom_footer{
+    background-color: #f57676;
+    padding: 10px;
+}
+
+.custom_header img{
+width: 100px;
+height: auto;
+}
+.main_contents{
+    max-width:800px;
+    margin: 0px auto;
+    min-height: 500px;
+}
+
+ .availavility_check{
+    margin: 0 auto;
+ }
+
+input[type=checkbox] {
+  -ms-transform: scale(2, 2);
+  -webkit-transform: scale(2, 2);
+  transform: scale(2, 2);
+
+}
+.time_table {
+    text-align: center; /* 水平方向の中央揃え */
+    vertical-align: middle; /* 垂直方向の中央揃え */
+}
+
+.time_table thead tr th {
+    background-color: #ffc7c7;
+}
+
+.create_table tr th{
+    background-color: #ffc7c7;
+    padding: 10px;
+}
+.create_table{
+    max-width: 600px;
+    margin: auto;
+}
+
+.create_table tr td input[type="text"]{
+    border: none;
+    border-radius: 5px;
+    background: rgb(235, 234, 234);
+    font-size: 1.1rem;
+}
+.create_table tr td textarea{
+    border: none;
+    border-radius: 5px;
+    background: rgb(235, 234, 234);
+    font-size: 1.1rem;
+}
+
+.main_input_text{
+    border: none;
+    border-radius: 5px;
+    background: rgb(235, 234, 234);
+    font-size: 1.1rem;
+}
+.btn-primary{
+    --bs-btn-bg: #c10020!important;
+    --bs-btn-border-color: #c10020!important;
+    --bs-btn-hover-bg:#e63956!important;
+    --bs-btn-hover-border-color:#e63956!important;
+}
+.dalete_input_text{
+    border: none;
+    border-radius: 5px;
+    background: rgb(255, 255, 255);
+    font-size: 1.4rem;
+}
+.dalete_div input[type=submit]{
+margin-top: -8px;
+}
+.dalete_div label{
+    font-weight: bold;
+}
