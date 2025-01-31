@@ -25,4 +25,4 @@ test:
 # is mounted as a persistent Docker volume in config/deploy.yml.
 production:
   adapter: postgresql
-  url: <%= ENV['postgres://koyeb-adm:npg_FyhLQH30xvtM@ep-billowing-feather-a1olfjau.ap-southeast-1.pg.koyeb.app/koyebdb'] =%>
+  url: <%= ENV['DATABASE_URL'] %>
