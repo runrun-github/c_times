@@ -26,7 +26,5 @@ test:
 production:
   adapter: postgresql
   url: <%= ENV['DATABASE_URL'] %>
-
-  cache:
-    adapter: redis
-    url: redis://localhost:6379/0
+  pool: 5
+  sslmode: require
