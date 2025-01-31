@@ -2,27 +2,38 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
 
 development:
   <<: *default
-  database: your_app_development
-  username: <%= ENV['DB_USERNAME'] %>  # 環境変数でユーザー名を指定
-  password: <%= ENV['DB_PASSWORD'] %>  # 環境変数でパスワードを指定
-  host: localhost
+  database: <%= ENV['DATABASE_URL'] || 'your_local_development_db_name' %>
+  username: <%= ENV['DATABASE_USERNAME'] || 'your_local_username' %>
+  password: <%= ENV['DATABASE_PASSWORD'] || 'your_local_password' %>
+  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
 
 test:
   <<: *default
-  database: your_app_test
-  username: <%= ENV['DB_USERNAME'] %>  # 環境変数でユーザー名を指定
-  password: <%= ENV['DB_PASSWORD'] %>  # 環境変数でパスワードを指定
-  host: localhost
+  database: <%= ENV['DATABASE_URL'] || 'your_local_test_db_name' %>
+  username: <%= ENV['DATABASE_USERNAME'] || 'your_local_username' %>
+  password: <%= ENV['DATABASE_PASSWORD'] || 'your_local_password' %>
+  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
 
 production:
-  <<: *default
-  url: <%= ENV['DATABASE_URL'] %>  # Herokuなどの環境で使われるURL形式
-  pool: 5
-  sslmode: require  # SSL接続が必要な場合
-
+  primary:
+    <<: *default
+    database: <%= ENV['DATABASE_URL'] || 'your_production_db_name' %>
+    username: <%= ENV['DATABASE_USERNAME'] || 'your_production_username' %>
+    password: <%= ENV['DATABASE_PASSWORD'] || 'your_production_password' %>
+    host: <%= ENV['DATABASE_HOST'] || 'your_production_host' %>
+  cache:
+    <<: *default
+    database: <%= ENV['DATABASE_URL'] || 'your_production_cache_db_name' %>
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *default
+    database: <%= ENV['DATABASE_URL'] || 'your_production_queue_db_name' %>
+    migrations_paths: db/queue_migrate
   cable:
     <<: *default
-    url: <%= ENV['DATABASE_URL'] %>  # Action Cable でも同じ設定を使用
+    database: <%= ENV['DATABASE_URL'] || 'your_production_cable_db_name' %>
+    migrations_paths: db/cable_migrate

@@ -1,42 +1,62 @@
-# Stage 1: Build stage
-FROM ruby:3.2.0-alpine AS build
+# syntax=docker/dockerfile:1
+# check=error=true
 
+ARG RUBY_VERSION=3.2.5
+FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
+
+# Rails app lives here
 WORKDIR /rails
 
-# 必要なパッケージのインストール
-RUN apk update && apk add --no-cache build-base
+# Install base packages and libpq for PostgreSQL
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl libjemalloc2 libvips libpq-dev && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# アプリケーションのコードをコピー
+# Set production environment
+ENV RAILS_ENV="production" \
+    BUNDLE_DEPLOYMENT="1" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_WITHOUT="development"
+
+# Throw-away build stage to reduce size of final image
+FROM base AS build
+
+# Install packages needed to build gems
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y build-essential git pkg-config && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Install application gems
+COPY Gemfile Gemfile.lock ./
+RUN bundle install && \
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
+    bundle exec bootsnap precompile --gemfile
+
+# Copy application code
 COPY . .
 
-# 必要な gems をインストール
-RUN bundle install
-
-# アセットのプリコンパイル
+# Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
+
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
-# Stage 2: Production stage
-FROM ruby:3.2.0-alpine AS production
+# Final stage for app image
+FROM base
 
-WORKDIR /rails
-
-# 必要なパッケージをインストール（必要に応じて）
-RUN apk update && apk add --no-cache bash
-
-# ビルド済みの gems とアセットをコピー
-COPY --from=build /usr/local/bundle /usr/local/bundle
+# Copy built artifacts: gems, application
+COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 
-# root ユーザーに切り替えてから chmod を実行
-USER root
-RUN chmod +x /usr/bin/docker-entrypoint.sh
+# Run and own only the runtime files as a non-root user for security
+RUN groupadd --system --gid 1000 rails && \
+    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
+    chown -R rails:rails db log storage tmp
+USER 1000:1000
 
-# 作業ユーザーを rails に戻す
-USER rails
+# Entrypoint prepares the database.
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-# Entrypoint の設定
-COPY docker-entrypoint.sh /usr/bin/
-ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
-
-RUN apk add --no-cache libxml2 libxslt
+# Start server via Thruster by default, this can be overwritten at runtime
+EXPOSE 80
+CMD ["./bin/thrust", "./bin/rails", "server"]
